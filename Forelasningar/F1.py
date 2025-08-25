@@ -15,6 +15,7 @@ def plotta(f, a, b):
     ax.set_xlabel('x', fontsize=14)
     ax.set_ylabel('y', fontsize=14)
     ax.tick_params (labelsize=14)
+    plt.grid(True)
     plt.show()
 
 def main():
