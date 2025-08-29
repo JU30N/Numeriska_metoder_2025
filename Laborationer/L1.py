@@ -36,7 +36,7 @@ def U1b():
         raise RuntimeError(
             "Fixed-point iteration did not converge within the maximum number of iterations.")
 
-    x0 = 0.2
+    x0 = 0.8
     tol = 1E-10
     root, iterations =fipforloop(1,x0,tol,1000)
     print('\n')
@@ -139,6 +139,6 @@ def U1e():
 
 
 #U1a()
-#U1b()
+U1b()
 #U1d()
-U1e()
+#U1e()
