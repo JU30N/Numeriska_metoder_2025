@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import numpy as np
 import matplotlib.pyplot as plt
 #a)
@@ -9,7 +7,6 @@ def U1a():
 
     L = 1
 
-    # Plotting the iterations
     x_vals = np.linspace(0, L, 100)
     y_vals = f(x_vals, L)
 
