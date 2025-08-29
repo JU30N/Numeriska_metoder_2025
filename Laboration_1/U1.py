@@ -1,30 +1,52 @@
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import matplotlib.pyplot as plt
-import os
+#a)
+def Ua():
+    def f(x, L):
+        return (8/3) * (x / L) - 3 * (x / L)**2 + (1/3) * (x / L)**3 - (2/3) * np.sin(np.pi * x / L)
 
-#a) svar 2st
-# def clear_console():
-#     os.system('clear')
-    
-# f = lambda x, L:(8/3)*(x/L) - 3*(x/L)**2 + (1/3)*(x/L)**3 - (2/3)*np.sin(np.pi * x / L)
+    L = 1
 
-# def plotta(f, a, b):
-#     fig, ax = plt.subplots()
-#     x = np.linspace(a, b, 100)#mellan a och b med 100 punkter
-#     y = f(x, L=1)
-#     ax.plot(x, y)#plotta
-#     ax.set_xlabel('x')#sätta som x
-#     ax.set_ylabel('f(x)')#sätta som y
-#     ax.set_title('Plot of the function f(x)')
-#     plt.grid()#visa grid
-#     plt.show()
-    
-# def main():
-#     clear_console()
-#     plotta(f, 0, 1)#mellan 0 och 1
-    
+    # Plotting the iterations
+    x_vals = np.linspace(0, L, 100)
+    y_vals = f(x_vals, L)
 
-# if __name__ == '__main__':
-#     main()
+    plt.plot(x_vals, y_vals, label="f(x)")
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.grid(True)
+    plt.legend()
+    plt.show()
 
-#b)
+#b)svar: man kan hitta en. 
+def Ub():
+
+    def fipforloop(L, x0, tol, max_iter):
+    # Initiera loopen
+        g = lambda x, L: ((3/8) * L) * (3*(x/L)**2 - (1/3)*(x/L)**3 + (2/3)*np.sin(np.pi*x/L))
+        x = x0
+        for n in range(1, max_iter + 1):
+                x_new = g(x, L)
+                print(f"Iteration {n}: x = {x}, x_new = {x_new}")  
+
+                if np.abs(x_new - x) < tol:
+                    return x_new, n
+                x = x_new
+        raise RuntimeError(
+            "Fixed-point iteration did not converge within the maximum number of iterations.")
+
+    x0 = 0.3
+    tol = 1E-8
+    root, iterations =fipforloop(1,x0,tol,1000)
+    print('\n')
+    print(f"Fixed point: {root:.8f}, after {iterations} iterations")
+
+    def f(x, L):
+        return abs((((3*L)/8)* (6*(x/(L**2))) - (x**2)/(L**3) + ((2*np.pi)/(3*L)) * np.cos((np.pi*x)/L)))
+    #print(f(0.8,1))
+    #print(f(0.3,1))
+
+#Ua()
+#Ub()
