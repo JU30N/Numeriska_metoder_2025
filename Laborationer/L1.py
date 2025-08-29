@@ -125,9 +125,9 @@ def U1e():
     #print(Delta_x_newton)
     Delta_x_FPI, n_iter_FPI= FPI_method(x0, tol, 1000)
 
-    plt.plot(range(1, n_iter_n+1), Delta_x_newton,color = 'r')
-    plt.plot(range(1, n_iter_FPI+1),Delta_x_FPI,  color = 'b')
-    #plt.semilogy(range(1, n_iter_n+1), Delta_x_newton,color = 'r')
+    #plt.plot(range(1, n_iter_n+1), Delta_x_newton,color = 'r')
+    #plt.plot(range(1, n_iter_FPI+1),Delta_x_FPI,  color = 'b')
+    plt.semilogy(range(1, n_iter_n+1), Delta_x_newton,color = 'r')
     #plt.semilogy(range(1, n_iter_FPI+1),Delta_x_FPI,  color = 'b')
     plt.xlabel('iterations')
     plt.ylabel('error')
