@@ -47,6 +47,7 @@ def U1b():
     #print(g_prim(0.8,1))
     #print(g_prim(0.3,1))
 
+#c)svar: använd U1b
 def U1c():
     #samma som Ub()
     return 
