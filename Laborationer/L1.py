@@ -134,9 +134,61 @@ def U1e():
     plt.grid(True)
     plt.show()
 
+def U2a():
+    return
 
+def U2b():
+    return
+
+def U2c():
+    return
+
+def U2d():
+    return
+
+def U2e():
+    return
+
+def U2f():
+    return
+
+def U3a():
+    return
+
+def U3b():
+    return
+
+def U3c():
+    return
+
+def U3d():
+    return
+
+def U3e():
+    return
+
+def U3f():
+    return
+
+def U3g():
+    return
 
 #U1a()
 #U1b()
 #U1d()
 #U1e()
+
+#U2a()
+#U2b()
+#U2c()
+#U2d()
+#U2e()
+#U2f()
+
+#U3a()
+#U3b()
+#U3c()
+#U3d()
+#U3e()
+#U3f()
+#U3g()
