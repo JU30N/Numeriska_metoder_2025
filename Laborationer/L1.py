@@ -138,24 +138,53 @@ def U1e():
     plt.show()
 
 def U2a():
+    #labb fråga behöver man ta fram varenda polynom för att det är ju ändå 
+    # samma bara fel om datorn inte kan räkna ut 
+
     #Naiv: 11
     #centrerad: 11
     #Newton: 11
 
     X_data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     Y_data = np.array([421, 553, 709, 871, 1021, 1109, 1066, 929, 771, 612, 463, 374])
-    p = poly.polyfit(X_data, Y_data, 11)#makes a polynom using Naiv
-    x = np.linspace(0, 12, 1000)
-    y = poly.polyval(x, p)
-    fig, ax = plt.subplots()
-    ax.plot(x, y, 'b')
-    plt.grid(True)
-    plt.show()
+    # p = poly.polyfit(X_data, Y_data, 11)#makes a polynom using Naiv
+    # x = np.linspace(0, 12, 1000)
+    # y = poly.polyval(x, p)
+    # fig, ax = plt.subplots()
+    # ax.plot(x, y, 'b')
+    # plt.grid(True)
+    # plt.show()
 
+    def newton_interpolation():
+
+        def newton_interpolation_matrix(x):    
+            n = len(x)
+            matrix = np.zeros((n, n))
+            matrix[:, 0] = 1  # First column is 1s
+            for j in range(1, n):
+                for i in range(j, n):
+                    matrix[i, j] = matrix[i, j-1] * (x[i] - x[j-1])
+            return matrix
+        print('')
+        b = Y_data.reshape(len(Y_data),1)#makes it to a column vector
+        print(b)
+        a = np.linalg.solve(newton_interpolation_matrix(X_data), b)
+        print(a)
+        print('')
+
+
+        print("\nInterpolation Matrix:")
+        print(newton_interpolation_matrix(X_data))
+
+        p = lambda T: a[0] + a[1]*(T-X_data[0]) + a[2]*(T-X_data[0])*(T-X_data[1])
+
+
+    newton_interpolation()
     #alla olika kommer visa samma polynom bara på olika sätt
     
 
 def U2b():
+
     return
 
 def U2c():
