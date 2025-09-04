@@ -182,10 +182,41 @@ def U2a():
     newton_interpolation()
     #alla olika kommer visa samma polynom bara på olika sätt
     
-
 def U2b():
+    #förstår inte andra delen av uppgiften
+    X_data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+    Y_data = np.array([421, 553, 709, 871, 1021, 1109, 1066, 929, 771, 612, 463, 374])
 
-    return
+    vander_matrix = np.vander(Y_data)#vander matrix from allt the 
+
+    def get_newton_interpolation_matrix(x):
+        n = len(x)
+        matrix = np.zeros((n, n))
+        matrix[:, 0] = 1  # First column is 1
+
+        for j in range(1, n): #for j in range(1, 12)
+            for i in range(j, n):#for i in range(j, 12)
+                matrix[i, j] = matrix[i, j-1] * (x[i] - x[j-1])# matrix[2, 1] * (x[2] - x[2-1]) => 1 * (709 - 553)
+
+        return matrix
+
+    def get_poly_centrerad_matrix(x):
+        #print(x)
+        n = len(x)
+        x_medel = np.mean(x)#medelvärdet
+        x_cent = x - x_medel#central alltså tm
+        #print(x_cent)
+        matrix = np.vander(x_cent, n)
+        #print(matrix)
+        return matrix
+
+    print(f"konditionstal Naiv: {np.linalg.cond(np.vander(Y_data), p = np.inf)}")
+    print("\n")
+    print(f"konditionsral Newton: {np.linalg.cond(get_newton_interpolation_matrix(Y_data), p = np.inf)}")
+    print("\n")
+    print(f"konditionstal Center: {np.linalg.cond(get_poly_centrerad_matrix(Y_data), p = np.inf)} ")
+
+    
 
 def U2c():
     return
@@ -225,8 +256,8 @@ def U3g():
 #U1d()
 #U1e()
 
-U2a()
-#U2b()
+#U2a()
+U2b()
 #U2c()
 #U2d()
 #U2e()
