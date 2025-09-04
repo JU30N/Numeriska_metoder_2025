@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import numpy.polynomial.polynomial as poly
+import os
+
 #a)
 def U1a():
     def f(x, L):
@@ -135,7 +138,22 @@ def U1e():
     plt.show()
 
 def U2a():
-    return
+    #Naiv: 11
+    #centrerad: 11
+    #Newton: 11
+
+    X_data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+    Y_data = np.array([421, 553, 709, 871, 1021, 1109, 1066, 929, 771, 612, 463, 374])
+    p = poly.polyfit(X_data, Y_data, 11)#makes a polynom using Naiv
+    x = np.linspace(0, 12, 1000)
+    y = poly.polyval(x, p)
+    fig, ax = plt.subplots()
+    ax.plot(x, y, 'b')
+    plt.grid(True)
+    plt.show()
+
+    #alla olika kommer visa samma polynom bara på olika sätt
+    
 
 def U2b():
     return
@@ -178,7 +196,7 @@ def U3g():
 #U1d()
 #U1e()
 
-#U2a()
+U2a()
 #U2b()
 #U2c()
 #U2d()
