@@ -216,7 +216,7 @@ def U2b():
     print("\n")
     print(f"konditionstal Center: {np.linalg.cond(get_poly_centrerad_matrix(Y_data), p = np.inf)} ")
 
-    
+    avrundningsfel = .0
 
 def U2c():
     return
