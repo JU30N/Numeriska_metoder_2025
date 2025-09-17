@@ -219,13 +219,89 @@ def U2b():
     avrundningsfel = .0
 
 def U2c():
-    return
+    X_data = np.array([4, 5, 6, 7, 8])
+    Y_data = np.array([871, 1021, 1109, 1066, 929])  
+
+    def minstakvadratmetoden(x, y):
+        n = len(x)
+        x = np.array(x).reshape(n,1)
+        y = np.array(y).reshape(n,1)
+        
+        # matris
+        A = np.hstack([x**0, x, x**2])
+        AT = A.T
+        
+        # normal ekvation lösning
+        a = np.linalg.solve(AT@A, AT@y)
+        
+        # resudial vektorn
+        r = A@a - y  
+        r_2norm = np.linalg.norm(r)
+        SE = r_2norm**2
+        RMSE = np.sqrt(SE/len(r))
+        
+        print(f"\n2-normen av r = {r_2norm}")
+        print(f"\nSquare Error = {SE}")
+        print(f"\nRoot Mean Square Error = {RMSE}")
+        
+        return a
+    minstakvadratmetoden(X_data, Y_data)
 
 def U2d():
-    return
+    X_data = np.array([4, 5, 6, 7, 8])
+    Y_data = np.array([871, 1021, 1109, 1066, 929])
+
+    def minstakvadratmetoden(x, y):
+        n = len(x)
+        x = np.array(x).reshape(n,1)
+        y = np.array(y).reshape(n,1)
+        
+        # matris
+        A = np.hstack([x**0, x, x**2, x**3])
+        AT = A.T
+        
+        # normal ekvation lösning
+        a = np.linalg.solve(AT@A, AT@y)
+        
+        # resudial vektorn
+        r = A@a - y  
+        r_2norm = np.linalg.norm(r)
+        SE = r_2norm**2
+        RMSE = np.sqrt(SE/len(r))
+        
+        print(f"\n2-normen av r = {r_2norm}")
+        print(f"\nSquare Error = {SE}")
+        print(f"\nRoot Mean Square Error = {RMSE}")
+        
+        return a
+    minstakvadratmetoden(X_data, Y_data)
 
 def U2e():
-    return
+    X_data = np.array([4, 5, 6, 7, 8])
+    Y_data = np.array([871, 1021, 1109, 1066, 929])
+    def minstakvadratmetoden(x,y):
+        n = len(x)
+        x = np.array(x).reshape(n,1)
+        y = np.array(y).reshape(n,1)
+
+        omega = 2*np.pi/12
+        A = np.hstack([x**0, np.cos(omega*x), np.sin(omega*x)])
+        AT = np.transpose(A)
+        a = np.linalg.solve(AT@A, AT@y)
+
+        # residualer
+        r = A@a - y
+        r_2norm = np.linalg.norm(r)
+        SE = r_2norm**2
+        RMSE = np.sqrt(SE/len(r))
+
+        print(f"2-normen av r = {r_2norm}")
+        print(f"Square Error = {SE}")
+        print(f"Root Mean Square Error = {RMSE}")
+
+        return a
+    minstakvadratmetoden(X_data, Y_data)
+    
 
 def U2f():
     return
@@ -257,10 +333,10 @@ def U3g():
 #U1e()
 
 #U2a()
-U2b()
+#U2b()
 #U2c()
 #U2d()
-#U2e()
+U2e()
 #U2f()
 
 #U3a()
