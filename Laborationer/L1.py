@@ -307,19 +307,117 @@ def U2f():
     return
 
 def U3a():
-    return
+    def trapetskvadratur(f,n, v_indata):
+
+        h = (v_indata[1] - v_indata[0])/n                 # n trapets
+        x = np.linspace(v_indata[0],v_indata[1],n+1)    # a och b ingår i intervallet
+        y = f(x)
+        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
+        return I_T
+
+    n = 1000#antal trapets
+    indata = np.array([0, 2])
+    f = lambda x:(x**3)*(np.e**x)
+    print(trapetskvadratur(f,n,indata))
+
 
 def U3b():
-    return
+
+    def trapetskvadratur(f,n, v_indata):
+        h = (v_indata[1] - v_indata[0])/n                 # n trapets
+        x = np.linspace(v_indata[0],v_indata[1],n+1)    # a och b ingår i intervallet
+        y = f(x)
+        I_T = (h*(y[0] + 2*np.sum(y[1:-1]) + y[-1]))/2
+        e_h = np.abs(20.7781-I_T)
+        # print(I_T)
+        # print(e_h)
+        print(n)
+        #steglängds halvering är att halvera h = (a-b)/n genom att ändra på n så att h/2 = (a-b)/2n
+        return I_T
+
+    n = 1000#antal trapets
+    indata = np.array([0, 2])
+    f = lambda x:(x**3)*(np.e**x)
+    I_t = trapetskvadratur(f,n,indata)
+    I_t_half = trapetskvadratur(f,(2*n),indata)
+    I_t_fouth = trapetskvadratur(f,(4*n),indata)
+
+    print(I_t)
+    print(I_t_half)
+    print(I_t_fouth)
+
+    steglangdshalvering = (np.abs(I_t_half - I_t)) / (np.abs(I_t_fouth - I_t_half))
+    print("steglängshalvering : " + str(steglangdshalvering))
 
 def U3c():
-    return
+    def trapetskvadratur(n, v_indata):
+
+        h = (v_indata[1] - v_indata[0])/n                 # n trapets h = 1
+        y = [12.00, 15.10, 19.01, 23.92, 30.11, 37.90, 47.70, 60.03, 75.56]
+        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
+        return I_T
+
+    n = 8#antal trapets
+    indata = np.array([2014, 2022])
+    
+    print("skattade värde på kW " + str(trapetskvadratur(n,indata)))
 
 def U3d():
-    return
+    def trapetskvadratur(n, v_indata):
+
+        h = (v_indata[1] - v_indata[0])/n                 # n trapets
+        y = [12.00, 15.10, 19.01, 23.92, 30.11, 37.90, 47.70, 60.03, 75.56]
+        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
+        return I_T
+    def trapetskvadratur_2(n, v_indata):
+
+        h = (v_indata[1] - v_indata[0])/(2*n)                 # n trapets
+        y = [12.00, 19.01, 30.11, 47.70, 75.56]
+        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
+        return I_T
+    def trapetskvadratur_4(n, v_indata):
+
+        h = (v_indata[1] - v_indata[0])/(4*n)                 # n trapets
+        y = [12.00, 30.11, 75.56]
+        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
+        return I_T
+    def trapetskvadratur_8(n, v_indata):
+
+        h = (v_indata[1] - v_indata[0])/(8*n)                 # n trapets
+        y = [12.00, 75.56]
+        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
+        return I_T
+    n = 8#antal trapets
+    indata = np.array([2014, 2022])
+    error_1 = np.abs(trapetskvadratur(n, indata) - trapetskvadratur_2(n, indata))
+    error_2 = np.abs(trapetskvadratur_2(n, indata) - trapetskvadratur_4(n, indata))
+    error_3 = np.abs(trapetskvadratur_4(n, indata) - trapetskvadratur_8(n, indata))
+    print("eh1 : " + str(error_1))
+    print("eh2 : " + str(error_2))
+    print("eh3 : " + str(error_3))
+    print(error_1 / error_2)
 
 def U3e():
-    return
+    def trapetskvadratur_q_2(n, v_indata):
+
+        h = (v_indata[1] - v_indata[0])/n                 # n trapets
+        y = [12.00, 15.10, 19.01, 23.92, 30.11, 37.90, 47.70, 60.03, 75.56]
+        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
+        return I_T
+    def trapetskvadratur(n, v_indata):
+
+        h = (v_indata[1] - v_indata[0])/(2*n)                 # n trapets
+        y = [12.00, 19.01, 30.11, 47.70, 75.56]
+        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
+        return I_T
+    
+    #q=2 h = 1 
+    n = 8#antal trapets
+    indata = np.array([2014, 2022])
+    I_t = trapetskvadratur(n, indata) + ((trapetskvadratur(n, indata) - trapetskvadratur_q_2(n, indata))/3)
+    print(I_t)
+
+    I_s = (1/3)*(12 + 4*(30.11) + 75.56)
 
 def U3f():
     return
@@ -336,13 +434,13 @@ def U3g():
 #U2b()
 #U2c()
 #U2d()
-U2e()
+#U2e()
 #U2f()
 
 #U3a()
 #U3b()
 #U3c()
 #U3d()
-#U3e()
+U3e()
 #U3f()
 #U3g()
