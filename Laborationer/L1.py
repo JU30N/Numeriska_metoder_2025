@@ -147,13 +147,13 @@ def U2a():
 
     X_data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     Y_data = np.array([421, 553, 709, 871, 1021, 1109, 1066, 929, 771, 612, 463, 374])
-    # p = poly.polyfit(X_data, Y_data, 11)#makes a polynom using Naiv
-    # x = np.linspace(0, 12, 1000)
-    # y = poly.polyval(x, p)
-    # fig, ax = plt.subplots()
-    # ax.plot(x, y, 'b')
-    # plt.grid(True)
-    # plt.show()
+    p = poly.polyfit(X_data, Y_data, 11)#makes a polynom using Naiv
+    x = np.linspace(0, 12, 1000)
+    y = poly.polyval(x, p)
+    fig, ax = plt.subplots()
+    ax.plot(x, y, 'b')
+    plt.grid(True)
+    plt.show()
 
     def newton_interpolation():
 
@@ -194,10 +194,12 @@ def U2b():
         matrix = np.zeros((n, n))
         matrix[:, 0] = 1  # First column is 1
 
+        print(matrix)
+
         for j in range(1, n): #for j in range(1, 12)
             for i in range(j, n):#for i in range(j, 12)
                 matrix[i, j] = matrix[i, j-1] * (x[i] - x[j-1])# matrix[2, 1] * (x[2] - x[2-1]) => 1 * (709 - 553)
-
+        print(matrix)
         return matrix
 
     def get_poly_centrerad_matrix(x):
@@ -210,11 +212,11 @@ def U2b():
         #print(matrix)
         return matrix
 
-    print(f"konditionstal Naiv: {np.linalg.cond(np.vander(Y_data), p = np.inf)}")
+    print(f"konditionstal Naiv: {np.linalg.cond(np.vander(X_data), p = np.inf)}")
     print("\n")
-    print(f"konditionsral Newton: {np.linalg.cond(get_newton_interpolation_matrix(Y_data), p = np.inf)}")
+    print(f"konditionsral Newton: {np.linalg.cond(get_newton_interpolation_matrix(X_data), p = np.inf)}")
     print("\n")
-    print(f"konditionstal Center: {np.linalg.cond(get_poly_centrerad_matrix(Y_data), p = np.inf)} ")
+    print(f"konditionstal Center: {np.linalg.cond(get_poly_centrerad_matrix(X_data), p = np.inf)} ")
 
     avrundningsfel = .0
 
@@ -398,29 +400,42 @@ def U3d():
     print(error_1 / error_2)
 
 def U3e():
-    def trapetskvadratur_q_2(n, v_indata):
 
-        h = (v_indata[1] - v_indata[0])/n                 # n trapets
-        y = [12.00, 15.10, 19.01, 23.92, 30.11, 37.90, 47.70, 60.03, 75.56]
-        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
-        return I_T
-    def trapetskvadratur(n, v_indata):
-
-        h = (v_indata[1] - v_indata[0])/(2*n)                 # n trapets
-        y = [12.00, 19.01, 30.11, 47.70, 75.56]
-        I_T = h*(y[0] + 2*np.sum(y[1:-1]) + y[-1])/2
-        return I_T
+    def trapets(y_data, h):
+        return h * (y_data[0]/2 + np.sum(y_data[1:-1]) + y_data[-1]/2)
     
-    #q=2 h = 1 
-    n = 8#antal trapets
-    indata = np.array([2014, 2022])
-    I_t = trapetskvadratur(n, indata) + ((trapetskvadratur(n, indata) - trapetskvadratur_q_2(n, indata))/3)
-    print(I_t)
+    def simpsons(y_data, h):
+        if (len(y_data) - 1) % 2 != 0:
+            raise ValueError("")
+        return h/3 * (y_data[0] + 4*np.sum(y_data[1:-1:2]) + 2*np.sum(y_data[2:-1:2]) + y_data[-1])
+    
+    y = np.array([12.00, 15.10, 19.01, 23.92, 30.11, 37.90, 47.70, 60.03, 75.56])
+    h = 1.0  
+    T_h = trapets(y, h)
+    y_2h = y[::2]  # varannan data punkt
+    T_2h = trapets(y_2h, 2 * h)
+    r_e = (4*T_h - T_2h) / 3
+    print(r_e)
+    I_s= simpsons(y, h)
+    print(I_s)
 
-    I_s = (1/3)*(12 + 4*(30.11) + 75.56)
 
 def U3f():
-    return
+    x_data = np.array([2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022])
+
+    y_data = np.array([12.00, 15.10, 19.01, 23.92, 30.11, 37.90, 47.70, 60.03, 75.56])
+
+    x_new = x_data - 2014
+    Y_new = np.log(y_data)
+
+    A = np.vstack([np.ones(len(x_new)), x_new]).T
+    print(A)
+    koefficienter, residualer, rang, singulärvärden = np.linalg.lstsq(A, Y_new, rcond=None)
+
+    ln_a = koefficienter[0]
+    b = koefficienter[1]
+    a = np.exp(ln_a)
+
 
 def U3g():
     return
@@ -441,6 +456,6 @@ def U3g():
 #U3b()
 #U3c()
 #U3d()
-U3e()
-#U3f()
+#U3e()
+U3f()
 #U3g()
