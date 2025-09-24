@@ -60,7 +60,7 @@ def F(t, y):
 
 def main():
     t0 = 0
-    tend = 1
+    tend = 1.2
     U0 = [1]  #Initial values
     h = 0.1
     t_vals, y_vals = euler_system_forward_h(F, t0, tend, U0, h)

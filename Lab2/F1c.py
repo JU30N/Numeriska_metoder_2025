@@ -25,10 +25,10 @@ def euler_forward(t0, y0, tend, h):
 
 def exact_solution(t):
     return np.e**(-t) + t
-
+T = 1.2
 t0 = 0.0
 y0 = 1.0
-tend = 1.2
+tend = T
 h = 0.1
 
 t_vals, y_vals = euler_forward(t0, y0, tend, h)
