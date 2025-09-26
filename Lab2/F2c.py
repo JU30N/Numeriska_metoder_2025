@@ -42,7 +42,7 @@ def exakt_solution(t):
 def main():
     t0 = 0
     tend = 1.2
-    U0 = 1 # Initial values as a sequence
+    U0 = 1 
     h = [0.2, 0.1, 0.05, 0.025, 0.0125]
     T = 1.2
     y_exakt = exakt_solution(T)
