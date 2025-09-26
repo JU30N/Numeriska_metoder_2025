@@ -21,6 +21,7 @@ def euler_system_forward_h(F, t0, tend, U0, h):
     
     
     n_steps = int(np.abs(tend-t0)/h)
+    n_steps +=1#går ett steg för lite
     t_values = np.zeros(n_steps+1)
     y_values = np.zeros(n_steps+1)
 
@@ -49,6 +50,7 @@ def main():
     for step in h:
         t_vals, y_vals = euler_system_forward_h(F, t0, tend, U0, step)
         err = np.abs(y_vals[-1] - y_exakt)
+        print(t_vals[-1])
 
         print(f"Step: {step}, error value: {err}")
         
