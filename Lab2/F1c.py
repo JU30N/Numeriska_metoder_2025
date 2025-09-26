@@ -5,8 +5,6 @@ import os
 # Detta program löser en differentialekvation med Eulers metod framåt,
 # och verifierar felet vid en specifik tidpunkt T.
 
-import numpy as np
-import matplotlib.pyplot as plt
 
 def euler_forward(t0, y0, tend, h):
     f = lambda t,y: 1 + t - y

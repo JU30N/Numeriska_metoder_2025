@@ -1,5 +1,19 @@
+# Verifiera att din lösning med Eulers metod-framåt vid tid t = T, ger felet ek = |yk(T) − yexakt(T)| ≈ 0.0188.
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+from scipy import integrate
 
-def euler_system_forward_h(F, t0, tend, U0, h):
+# För fallet med dämpad svängning, 
+# utför en konvergensstudie för Euler framåt och bestäm
+# noggrannhetsordningen för metoden empiriskt. 
+# Beräkna felet komponentvis, se förklaring
+# nedan, vid sluttiden T = 20 och använd lösningen från solve_ivp som referenslösning. Gör
+# så här: Börja med ett värde på N som leder till en stabil numerisk lösning. Dubblera sedan
+# N (halvera tidssteget h) successivt och beräkna felen (ett fel per komponent i lösningen) för
+# varje värde på N. Följ stegen i F2 c) för att beräkna noggrannhetsordningen komponentvis
+
+def euler_system_forward(F, t0, tend, U0, h):
     
     """ 
     Implements Euler's method forward for a system of ODEs.
@@ -36,21 +50,21 @@ def F(t, Y, L = 2, C = 0.5, R = 1):
     return np.array([Y[1], -(R*Y[1]/L) - (1/(C*L))*Y[0]])
 
 a, b= 0, 20
-N = [20, 40, 80, 160]
+N = [40, 80, 160]
 U0 = [1,0]
+errors = []
+hs = []
 
 for n in N:
     h = (b - a) / n
-    t, Y = euler_system_forward_h(F, a, b, U0, h)
-    print(Y)
-    plt.plot(t, Y[:,0], label=f"N={n}")#vilken av q eller i som ska plottas?
+    t, Y = euler_system_forward(F, a, b, U0, h)
+    y_T = Y[-1]  # sol @ T
+    sol_ref = integrate.solve_ivp(F, [a,b], U0, t_eval=[b])
+    y_ref_T = sol_ref.y[:, -1]#sista vid T
+    err = np.linalg.norm(y_T - y_ref_T) 
+    errors.append(err)
+    hs.append(h)
 
-sol = integrate.solve_ivp(F, [a,b], U0, method='RK45', t_eval=np.linspace(a,b,1000))
-#print(sol.y)
-plt.plot(sol.t, sol.y[0], color = "purple", label="sol")#sol.y[0] = q(t)
-
-plt.xlabel("t")
-plt.ylabel("q(t)")
-plt.legend()
-plt.grid(True)
-plt.show()
+for k in range(len(errors)-1):
+    p = np.log(errors[k]/errors[k+1]) / np.log(2)
+    print(f"Between N={N[k]} and N={N[k+1]}: p ≈ {p:.2f}")

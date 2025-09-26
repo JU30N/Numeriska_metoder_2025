@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import integrate
 
-
+#man ser att för N=20 förstärks och resten förminskas
 
 
 def euler_system_forward_h(F, t0, tend, U0, h):
