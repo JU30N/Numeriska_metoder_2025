@@ -28,11 +28,10 @@ def diskretisering_temperatur(N, q, k, TL, TR, L=1.0):
     #print("new matrix A")
     #print(A)
     # Högerled HL
-    HL = (h**2 / k) * np.array([q(xj) for xj in x[1:N]])
-    
-    # Justera för randvillkor
-    HL[0] -= TL
-    HL[-1] -= TR
+    HL = np.array([q(xj) for xj in x[1:N]]) 
+    HL[0] = HL[0] - (k / h**2) * TL
+    HL[-1] = HL[-1] - (k / h**2) * TR
+
     
     return A, HL
 
@@ -41,7 +40,7 @@ def q(x):
     return 50 * x**3 * np.log(x + 1)
 
 def main():
-    k, TL, TR, N = 2, 2, 2, 10
+    k, TL, TR, N = 2, 2, 2, 4
     A, HL = diskretisering_temperatur(N, q, k, TL, TR)
     print("Systemmatris A:\n", A)
     print("Högerled HL:\n", HL)
