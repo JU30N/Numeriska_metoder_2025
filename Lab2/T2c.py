@@ -22,7 +22,7 @@ def diskretisering_temperatur(N, q, k, TL, TR, L=1.0):
             A[i, i+1] = 1
     #print("\n")
     #print("matrix A")
-    print(A)
+    #print(A)
     A = k/h**2 * A  # skala med k/h^2
     #print("\n")
     #print("new matrix A")
